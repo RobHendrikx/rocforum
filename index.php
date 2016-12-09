@@ -15,7 +15,11 @@
         <!--<div class="navbar-header">
             <div class="navbar-brand">ROC Ter AA - Projectforum</div>
         </div>-->
-    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  <!-- /.container-fluid -->
 </nav>
 <div class="container" style="margin-top: 35px">
     <div class="page-header page-heading">
