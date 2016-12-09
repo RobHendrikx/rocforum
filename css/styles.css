@@ -1,0 +1,34 @@
+body {
+    font-family: 'Comfortaa', cursive !important;
+}
+
+.forum.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.forum .fa {
+    width: 1em;
+    text-align: center;
+}
+
+.forum.table th.cell-stat {
+    width: 6em;
+}
+
+.forum.table th.cell-stat-2x {
+    width: 14em;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#navbar {
+    background-color: #009898;
+}
+
+.navtext {
+    color: #ffffff !important;
+}
