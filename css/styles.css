@@ -27,8 +27,19 @@ ul {
 
 #navbar {
     background-color: #009898;
+    margin: 0;
+    padding: 0;
 }
 
 .navtext {
     color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.container {
+    margin-top: 0 !important;
+}
+
+.page-header {
+    margin-top: 20px !important;
 }
