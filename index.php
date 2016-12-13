@@ -14,6 +14,8 @@
 </div>
 <div class="container">
     <div class="page-header-margin-fix page-header page-heading">
+<div class="container" style="margin-top: 35px">
+    <div class="page-header page-heading">
         <h1 class="pull-left">Colleges</h1>
         <div class="clearfix"></div>
     </div>

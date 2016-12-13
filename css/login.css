@@ -1,0 +1,32 @@
+.bg{
+/*  background-color: red;*/
+}
+
+html{
+  overflow-x: hidden;
+}
+
+body{
+  background: url("../img/bg-login.jpg") no-repeat;
+  background-size: cover;
+
+}
+
+
+.navbar{
+  border-radius: 0px !important;
+}
+
+
+.input-group{
+  margin-bottom: 10px;
+}
+
+
+.margin-top-30{
+  margin-top: 30px;
+}
+
+.login{
+  text-align: center;
+}
