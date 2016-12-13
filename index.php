@@ -11,9 +11,9 @@
 <div id="navbar" class="container-fluid">
     <img src="img/logo.png"/>
     <a class="navtext" href="index.php">ROC Ter AA - Projectforum</a>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Login</a></li>
-    </ul>
+    <span class="right">
+        <a class="logintext" href="login.html">Login</a>
+    </span>
 </div>
 <div class="container">
     <div class="page-header-margin-fix page-header page-heading">

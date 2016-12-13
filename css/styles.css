@@ -31,4 +31,24 @@ ul {
 
 .navtext {
     color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.logintext {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.logintext:hover {
+    color: #000000 !important;
+}
+
+.navbar{
+    border-radius: 0px !important;
+}
+
+.right {
+    font-size:16px;
+    float: right;
+    line-height: 42px;
 }
