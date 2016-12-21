@@ -1,16 +1,8 @@
 <?php
 
-
-
 if(isset($_POST["username"])){
   $username = $_POST["username"];
   $password = $_POST["password"];
-
-  echo"<pre>";
-  var_dump($_POST);
-  echo"</pre>";
-
-
 
   $db = new PDO('mysql:host=localhost;dbname=rocforum;', 'root', '');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,7 +14,9 @@ if(isset($_POST["username"])){
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   if(count($result) > 0){
-    echo "logged in is true";
+    session_start();
+    $_SESSION["username"] = $username;
+    header('Location: index.php');
   }else{
     echo "logged in is false";
   }
