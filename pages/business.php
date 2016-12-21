@@ -50,7 +50,7 @@ if(isset($_SESSION["username"])) { ?>
             </tbody>
         </table>
         <div class="pull-right post">
-            <a href="../post.php" type="button" class="btn btn-primary btn-lg">Maak topic</a>
+            <a href="../post.php" type="button" class="btn btn-primary btn-lg">Voeg een project toe</a>
         </div>
     </div>
     </body>

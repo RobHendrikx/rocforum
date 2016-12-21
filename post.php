@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+if(!isset($_SESSION["username"])){
+header("Location: login.html");
+}
+
+
+$projectnaam = $omschrijving = $aantal_leden = $opleverdatum = $email_opdrachtgever = $telefoon_opdrachtgever = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $projectnaam = test_input($_POST["projectnaam"]);
+    $omschrijving = test_input($_POST["omschrijving"]);
+    $aantal_leden = test_input($_POST["aantal_leden"]);
+    $opleverdatum = test_input($_POST["opleverdatum"]);
+    $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
+    $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
+
+    echo '<pre>';
+    print_r($projectnaam);
+    print_r($omschrijving);
+    print_r($aantal_leden);
+    print_r($opleverdatum);
+    print_r($email_opdrachtgever);
+    print_r($telefoon_opdrachtgever);
+    echo '<pre>';
+
+    die();
+}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+
+    if(is_null($data) || $data == '') {
+        $data = null;
+    }
+    return $data;
+
+}
+
+?>
+
+
 <html>
 <head>
     <title>
@@ -15,36 +60,35 @@
         <a class="logintext" href="logout.php">Log uit</a>
     </span>
 </div>
-<div class="container">
-    <div class="page-header-margin-fix page-header page-heading">
+<form class="container" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="container" style="margin-top: 35px; padding-left: 0px; padding-right: 30px">
             <div class="page-header page-heading">
                 <h1 class="pull-left">Voeg een project toe</h1>
                 <div class="clearfix"></div>
             </div>
             <div class="form-group">
-                <label for="titel">Projectnaam</label>
-                <input type="text" class="form-control" id="projectnaam">
+                <label for="projectnaam">Projectnaam</label>
+                <input type="text" class="form-control" id="projectnaam" name="projectnaam">
             </div>
             <div class="form-group">
-                <label for="omschr">Projectomschrijving</label>
-                <textarea class="form-control" rows="5" id="omschrijving"></textarea>
+                <label for="omschrijving">Projectomschrijving</label>
+                <textarea class="form-control" rows="5" id="omschrijving" name="omschrijving"></textarea>
             </div>
             <div class="form-group">
-                <label for="omschr">Aantal projectleden</label>
-                <input type="number" class="form-control" id="aantal-leden" >
+                <label for="aantal-leden">Aantal projectleden</label>
+                <input type="number" class="form-control" id="aantal-leden" name="aantal_leden">
             </div>
             <div class="form-group">
-                <label for="omschr">Opleverdatum</label>
-                <input class="form-control" type="date" value="2016-12-16" id="opleverdatum">
+                <label for="opleverdatum">Opleverdatum</label>
+                <input class="form-control" type="date" id="opleverdatum" name="opleverdatum">
             </div>
             <div class="form-group">
-                <label for="titel">E-mail opdrachtgever</label>
-                <input type="text" class="form-control" id="email-opdrachtgever">
+                <label for="email-opdrachtgever">E-mail opdrachtgever</label>
+                <input type="email" class="form-control" id="email-opdrachtgever" name="email_opdrachtgever">
             </div>
             <div class="form-group">
-                <label for="titel">Telefoonnummer opdrachtgever (niet verplicht)</label>
-                <input type="text" class="form-control" id="telefoon-opdrachtgever">
+                <label for="telefoon-opdrachtgever"">Telefoonnummer opdrachtgever (niet verplicht)</label>
+                <input type="number" class="form-control" id="telefoon-opdrachtgever" name="telefoon_opdrachtgever">
             </div>
             <div class="clearfix"></div>
         </div>
@@ -56,12 +100,10 @@
             </div>
             <div class="col-md-6">
                 <div class="post">
-                    <a href="#" type="button" class="btn btn-primary btn-lg btn-block">Post topic</a>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Voeg het project toe</button>
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
+</form>
 </body>
 </html>
