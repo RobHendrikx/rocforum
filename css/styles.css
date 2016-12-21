@@ -73,3 +73,6 @@ ul {
     float: right !important;
 }
 
+.pull-left {
+    float: left !important;
+}

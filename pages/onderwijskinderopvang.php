@@ -16,6 +16,9 @@ if(isset($_SESSION["username"])) { ?>
     <div id="navbar" class="container-fluid">
         <img src="../img/logo.png"/>
         <a class="navtext" href="../index.php">ROC Ter AA - Projectforum</a>
+        <span class="right">
+            <a class="logintext" href="../logout.php">Log uit</a>
+        </span>
     </div>
     <div class="container" style="margin-top: 35px">
         <div class="page-header page-heading">

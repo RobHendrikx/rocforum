@@ -9,18 +9,18 @@
 </head>
 <body>
 <div id="navbar" class="container-fluid">
-    <img src="img/logo.png"/>
-    <a class="navtext" href="index.php">ROC Ter AA - Projectforum</a>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html">Login</a></li>
-    </ul>
+  <img src="img/logo.png"/>
+  <a class="navtext" href="index.php">ROC Ter AA - Projectforum</a>
+  <span class="right">
+        <a class="logintext" href="logout.php">Log uit</a>
+    </span>
 </div>
 
   <div class="region">
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 ">
-            <h1 class="center p-2">voeg een project toe</h1>
+            <h1 class="center p-2">Voeg een project toe</h1>
             <hr class="colorgraph">
 
 
