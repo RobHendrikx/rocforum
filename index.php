@@ -127,6 +127,10 @@ else { ?>
         <a class="navtext" href="index.php">ROC Ter AA - Projectforum</a>
         <span class="right">
         <a class="logintext" href="login.html">Log in</a>
+        </span>
+        <span class="right">
+        <a class="logintext" href="register.php" style="padding: 15px">Vraag inloggegevens aan</a>
+        </span>
     </span>
     </div>
     <div class="container">
