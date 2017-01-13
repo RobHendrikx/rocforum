@@ -1,38 +1,4 @@
-<?php
-require '/PHPMailer-master/PHPMailerAutoload.php';
 
-$mail = new PHPMailer;
-
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'rocteraaprojectforum@gmail.com';                 // SMTP username
-$mail->Password = 'ROCterAA123';                           // SMTP password
-$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 587;
-$mail->setFrom('rocteraaprojectforum@gmail.com', 'ROC Ter AA');
-$mail->addAddress('robhendrikx94@hotmail.com', 'Rob Hendrikx');     // Add a recipient
-
-$mail->Subject = 'Here is the subject';
-$mail->Body    = 'This is the HTML message body';
-$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-if(!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}
-
-//session_start();
-
-/*if(isset($_POST['send']))
-{
-    
-}*/
-
-//die();
-?>
 
 
 <html>

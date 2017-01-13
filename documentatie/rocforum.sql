@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 13 dec 2016 om 12:12
--- Serverversie: 5.6.24
--- PHP-versie: 5.6.8
+-- Gegenereerd op: 13 jan 2017 om 10:36
+-- Serverversie: 10.1.19-MariaDB
+-- PHP-versie: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `rocforum`
@@ -26,18 +26,18 @@ SET time_zone = "+00:00";
 -- Tabelstructuur voor tabel `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `idusers` int(11) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(120) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `users`
 --
 
-INSERT INTO `users` (`idusers`, `username`, `password`) VALUES
-(1, 'mohamed', '123');
+INSERT INTO `users` (`id`, `username`, `password`) VALUES
+(1, 'Rob', 'Test123');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -47,7 +47,7 @@ INSERT INTO `users` (`idusers`, `username`, `password`) VALUES
 -- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`idusers`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
@@ -57,7 +57,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
