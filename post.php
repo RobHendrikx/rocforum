@@ -9,21 +9,51 @@ header("Location: login.html");
 $projectnaam = $omschrijving = $aantal_leden = $opleverdatum = $email_opdrachtgever = $telefoon_opdrachtgever = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include("mydatabase.php");
     $projectnaam = test_input($_POST["projectnaam"]);
     $omschrijving = test_input($_POST["omschrijving"]);
     $aantal_leden = test_input($_POST["aantal_leden"]);
     $opleverdatum = test_input($_POST["opleverdatum"]);
     $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
     $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
+    $catid = test_input($_POST["cat_id"]);
 
     echo '<pre>';
-    print_r($projectnaam);
-    print_r($omschrijving);
-    print_r($aantal_leden);
-    print_r($opleverdatum);
-    print_r($email_opdrachtgever);
-    print_r($telefoon_opdrachtgever);
+    // print_r($projectnaam);
+    // print_r($omschrijving);
+    // print_r($aantal_leden);
+    // print_r($opleverdatum);
+    // print_r($email_opdrachtgever);
+    // print_r($telefoon_opdrachtgever);
+    var_dump($_POST);
     echo '<pre>';
+
+try {
+
+      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid)
+                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':pnaam', $projectnaam);
+      $stmt->bindParam(':omschrijving', $omschrijving);
+      $stmt->bindParam(':aantal_leden', $aantal_leden);
+      $stmt->bindParam(':opleverdatum', $opleverdatum);
+      $stmt->bindParam(':email_opdrachtgever', $email_opdrachtgever);
+      $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
+      $stmt->bindParam(':catid', $catid);
+
+      // insert one row
+      if ($stmt->execute()) {
+        # code...
+
+        echo "worked";
+      }else{
+        echo "false";
+      }
+
+} catch (PDOException $e) {
+  echo $e->getMessage();
+}
+
 
     die();
 }
@@ -66,6 +96,23 @@ function test_input($data) {
                 <h1 class="pull-left">Voeg een project toe</h1>
                 <div class="clearfix"></div>
             </div>
+            <div class="form-group">
+                <label for="cat_id">Project College</label>
+                <select class="form-control" name="cat_id" id="cat_id">
+                  <option value="1">ICT College</option>
+                  <option value="2">Business College</option>
+                  <option value="3">Techniek & Technologie College</option>
+                  <option value="4">Bouw & Design College</option>
+                  <option value="5">Dienstverlening College</option>
+                  <option value="6">Onderwijs & Kinderopvang College</option>
+                  <option value="7">Zorg & Welzijn College</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="categorie">Categorie</label>
+              <input type="text" name="categorie" class="form-control" placeholder="Web Developing/Verkoop etc.">
+            </div>
+            <hr>
             <div class="form-group">
                 <label for="projectnaam">Projectnaam</label>
                 <input type="text" class="form-control" id="projectnaam" name="projectnaam">

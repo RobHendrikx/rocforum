@@ -1,8 +1,21 @@
 <?php
 
 session_start();
-require '../mydatabase.php';
-if(isset($_SESSION["username"])) { ?>
+require ('../mydatabase.php');
+if(isset($_SESSION["username"])) {
+try{
+
+  $sql = "SELECT * FROM rocforum.post WHERE catid = 1";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+} catch (PDOException $e) {
+  echo $e->getMessage();
+}
+
+
+
+  ?>
     <html>
     <head>
         <title>
@@ -38,6 +51,17 @@ if(isset($_SESSION["username"])) { ?>
             </tr>
             </thead>
             <tbody>
+              <?php foreach ($result as $key => $value): ?>
+                <tr>
+                  <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
+                  <td>
+                      <h4><a href="pages/ict.php"><?php echo $value["projectnaam"] ?></a><br><small>..</small></h4>
+                  </td>
+                  <td class="text-center hidden-xs hidden-sm"><a href="#"><?php echo $value["datum"] ?></a></td>
+                  <td class="text-center hidden-xs hidden-sm"><a href="#">89 897</a></td>
+                  <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                </tr>
+              <?php endforeach; ?>
 
             </tbody>
         </table>
