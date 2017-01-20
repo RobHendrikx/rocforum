@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
     $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
     $catid = test_input($_POST["cat_id"]);
+    $categorie = test_input($_POST["categorie"]);
 
     echo '<pre>';
     // print_r($projectnaam);
@@ -30,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 try {
 
-      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid)
-                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid)";
+      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
+                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
       $stmt = $conn->prepare($sql);
       $stmt->bindParam(':pnaam', $projectnaam);
       $stmt->bindParam(':omschrijving', $omschrijving);
@@ -39,6 +40,7 @@ try {
       $stmt->bindParam(':opleverdatum', $opleverdatum);
       $stmt->bindParam(':email_opdrachtgever', $email_opdrachtgever);
       $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
+      $stmt->bindParam(':categorie', $categorie);
       $stmt->bindParam(':catid', $catid);
 
       // insert one row
@@ -67,6 +69,7 @@ function test_input($data) {
         $data = null;
     }
     return $data;
+
 
 }
 
@@ -134,7 +137,7 @@ function test_input($data) {
                 <input type="email" class="form-control" id="email-opdrachtgever" name="email_opdrachtgever">
             </div>
             <div class="form-group">
-                <label for="telefoon-opdrachtgever"">Telefoonnummer opdrachtgever (niet verplicht)</label>
+                <label for="telefoon-opdrachtgever">Telefoonnummer opdrachtgever (niet verplicht)</label>
                 <input type="number" class="form-control" id="telefoon-opdrachtgever" name="telefoon_opdrachtgever">
             </div>
             <div class="clearfix"></div>

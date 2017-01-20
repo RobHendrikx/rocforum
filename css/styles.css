@@ -76,3 +76,21 @@ ul {
 .pull-left {
     float: left !important;
 }
+
+.center{
+  text-align: center;
+}
+
+.margin-top-20{
+  margin-top: 50px;
+}
+
+.reldate{
+  position: relative;
+}
+
+.lowerdate{
+  position: absolute;
+  bottom: 1px;
+  right: 15px;
+}
