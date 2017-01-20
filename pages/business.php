@@ -49,9 +49,6 @@ if(isset($_SESSION["username"])) { ?>
             </tr>
             </tbody>
         </table>
-        <div class="pull-right post">
-            <a href="../post.php" type="button" class="btn btn-primary btn-lg">Voeg een project toe</a>
-        </div>
     </div>
     </body>
     </html>
