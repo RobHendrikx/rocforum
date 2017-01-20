@@ -30,7 +30,7 @@ if(isset($_SESSION["username"])) { ?>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <p class="lead">Kies hier welk college u de opdrachten voor wil zien.</p>
+                <p class="lead">Kies hier voor welk college u de opdrachten voor wil zien</p>
 
                 <table class="table forum table-striped">
                     <thead>
@@ -142,12 +142,12 @@ else { ?>
             <div class="container" style="margin-top: 35px">
                 <div class="page-header page-heading">
                     <h1 class="pull-left">Colleges</h1>
+                    <div class="pull-right post">
+                        <a href="post.php" type="button" class="btn btn-primary btn-sm">Voeg een project toe</a>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
-                <p class="lead">Kies hier welk college u de opdrachten voor wil ziens.</p>
-                <div class="pull-right post">
-                    <a href="post.php" type="button" class="btn btn-primary btn-lg">Voeg een project toe</a>
-                </div>
+                <p class="lead">Kies hier voor welk college u de opdrachten voor wil zien</p>
                 <table class="table forum table-striped">
                     <thead>
                     <tr>

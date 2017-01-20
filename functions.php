@@ -18,7 +18,7 @@ if(isset($_POST["username"])){
     $_SESSION["username"] = $username;
     header('Location: index.php');
   }else{
-    echo "logged in is false";
+      header('Location: login.html');
   }
 
   echo"<pre>";

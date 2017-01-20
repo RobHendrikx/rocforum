@@ -75,6 +75,7 @@ ul {
 
 .pull-left {
     float: left !important;
+<<<<<<< HEAD
 }
 
 .center{
@@ -94,3 +95,6 @@ ul {
   bottom: 1px;
   right: 15px;
 }
+=======
+}
+>>>>>>> d685b945a9663e03547b57200dc99f662e799dc5
