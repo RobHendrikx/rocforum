@@ -2,7 +2,20 @@
 
 session_start();
 require '../mydatabase.php';
-if(isset($_SESSION["username"])) { ?>
+if(isset($_SESSION["username"])) {
+    try{
+
+        $sql = "SELECT * FROM projectforum.post WHERE catid = 5 ORDER BY post.datum DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+
+
+
+    ?>
     <html>
     <head>
         <title>
@@ -33,11 +46,28 @@ if(isset($_SESSION["username"])) { ?>
                     <h3>Opdrachten</h3>
                 </th>
                 <th class="cell-stat text-center hidden-xs hidden-sm">Geplaatst</th>
-                <th class="cell-stat text-center hidden-xs hidden-sm">Categorie</th>
                 <th class="cell-stat-2x hidden-xs hidden-sm">Laatste reactie</th>
+                <th class="cell-stat text-center hidden-xs hidden-sm">Afgerond</th>
             </tr>
             </thead>
             <tbody>
+            <?php foreach ($result as $key => $value): ?>
+                <tr>
+                    <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
+                    <td>
+                        <h4><a href="post.php?id=<?php echo $value['idpost']?>"><?php echo $value["projectnaam"] ?></a><br><small><?php echo $value["userid"] ?></small></h4>
+                    </td>
+                    <td class="text-center hidden-xs hidden-sm"><?php echo $value["datum"] ?></td>
+                    <td class="hidden-xs hidden-sm">door <?php echo $value["userid"] ?><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                    <td class="text-center hidden-xs hidden-sm">
+                        <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
+                            <input type="checkbox" value="">
+                        <?php } else { ?>
+                            <input type="checkbox" onclick="return false;" readonly="readonly">
+                        <?php }?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
 
             </tbody>
         </table>

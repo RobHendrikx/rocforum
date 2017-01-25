@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require ('../mydatabase.php');
+require '../mydatabase.php';
 if(isset($_SESSION["username"])) {
 try{
 
@@ -12,6 +12,19 @@ try{
 } catch (PDOException $e) {
   echo $e->getMessage();
 }
+
+    try{
+        $sql = "SELECT * FROM post WHERE `catid` = 1 ORDER BY idpost DESC LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result1 = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+    /*echo '<pre>';
+    var_dump($result1);
+    echo '<pre>';
+    die();*/
 
 
 
@@ -55,10 +68,10 @@ try{
                 <tr>
                   <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
                   <td>
-                      <h4><a href="post.php?id=<?php echo $value['idpost']?>"><?php echo $value["projectnaam"] ?></a><br><small><?php echo substr($value["omschrijving"], 0, 50) ?></small></h4>
+                      <h4><a href="post.php?id=<?php echo $value['idpost']?>"><?php echo $value["projectnaam"] ?></a><br><small><?php echo $value["userid"] ?></small></h4>
                   </td>
                   <td class="text-center hidden-xs hidden-sm"><a href="#"><?php echo $value["datum"] ?></a></td>
-                  <td class="hidden-xs hidden-sm">door <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                  <td class="hidden-xs hidden-sm">door <?php echo $value["userid"] ?><br><small><i class="fa fa-clock-o"></i><?php ?> </small></td>
                   <td class="text-center hidden-xs hidden-sm">
                       <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
                           <input type="checkbox" value="">
