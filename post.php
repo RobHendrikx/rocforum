@@ -20,13 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
         $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
         $catid = test_input($_POST["cat_id"]);
-        $categorie = test_input($_POST["categorie"]);
+        /*$categorie = test_input($_POST["categorie"]);*/
 
+        /*echo '<pre>';
+        var_dump($catid);
+        echo '<pre>';
+        die();*/
 
         try {
-
-            $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
-                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
+            $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, userid)
+                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :userid)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':pnaam', $projectnaam);
             $stmt->bindParam(':omschrijving', $omschrijving);
@@ -34,8 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':opleverdatum', $opleverdatum);
             $stmt->bindParam(':email_opdrachtgever', $email_opdrachtgever);
             $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
-            $stmt->bindParam(':categorie', $categorie);
+            /*$stmt->bindParam(':categorie', $categorie);*/
             $stmt->bindParam(':catid', $catid);
+            $stmt->bindParam(':userid', $_SESSION['user']['username']);
 
             // insert one row
             if ($stmt->execute()) {
@@ -59,40 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $emailErr = true;
         }
     }
-    /*$omschrijving = test_input($_POST["omschrijving"]);
-    $aantal_leden = test_input($_POST["aantal_leden"]);
-    $opleverdatum = test_input($_POST["opleverdatum"]);
-    $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
-    $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
-    $catid = test_input($_POST["cat_id"]);
-    $categorie = test_input($_POST["categorie"]);*/
-
-    /*try {
-
-      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
-                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bindParam(':pnaam', $projectnaam);
-      $stmt->bindParam(':omschrijving', $omschrijving);
-      $stmt->bindParam(':aantal_leden', $aantal_leden);
-      $stmt->bindParam(':opleverdatum', $opleverdatum);
-      $stmt->bindParam(':email_opdrachtgever', $email_opdrachtgever);
-      $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
-      $stmt->bindParam(':categorie', $categorie);
-      $stmt->bindParam(':catid', $catid);
-
-      // insert one row
-      if ($stmt->execute()) {
-          header('Location: index.php');
-      }else{
-        echo "Er ging iets mis bij het posten van het project";
-      }
-
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-
-    die();*/
 }
 
 function test_input($data) {

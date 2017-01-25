@@ -2,9 +2,100 @@
 session_start();
 require 'mydatabase.php';
 
-$pdoQuery = "SELECT * FROM post";
-$pdoResult = $conn->query($pdoQuery);
-$pdoRowCount = $pdoResult->rowCount();
+$pdoQuery1 = "SELECT * FROM post WHERE `catid` = 1";
+$pdoResult1 = $conn->query($pdoQuery1);
+$pdoRowCount1 = $pdoResult1->rowCount();
+
+$pdoQuery2 = "SELECT * FROM post WHERE `catid` = 2";
+$pdoResult2 = $conn->query($pdoQuery2);
+$pdoRowCount2 = $pdoResult2->rowCount();
+
+$pdoQuery3 = "SELECT * FROM post WHERE `catid` = 3";
+$pdoResult3 = $conn->query($pdoQuery3);
+$pdoRowCount3 = $pdoResult3->rowCount();
+
+$pdoQuery4 = "SELECT * FROM post WHERE `catid` = 4";
+$pdoResult4 = $conn->query($pdoQuery4);
+$pdoRowCount4 = $pdoResult4->rowCount();
+
+$pdoQuery5 = "SELECT * FROM post WHERE `catid` = 5";
+$pdoResult5 = $conn->query($pdoQuery5);
+$pdoRowCount5 = $pdoResult5->rowCount();
+
+$pdoQuery6 = "SELECT * FROM post WHERE `catid` = 6";
+$pdoResult6 = $conn->query($pdoQuery6);
+$pdoRowCount6 = $pdoResult6->rowCount();
+
+$pdoQuery7 = "SELECT * FROM post WHERE `catid` = 7";
+$pdoResult7 = $conn->query($pdoQuery7);
+$pdoRowCount7= $pdoResult7->rowCount();
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 1 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result1 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 2 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result2 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 3 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result3 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 4 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result4 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 5 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result5 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 6 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result6 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+try{
+    $sql = "SELECT * FROM post WHERE `catid` = 7 ORDER BY idpost DESC LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result7 = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+/*echo '<pre>';
+var_dump($result);
+echo '<pre>';
+die();*/
 
 if(isset($_SESSION["username"])) { ?>
     <html>
@@ -21,7 +112,7 @@ if(isset($_SESSION["username"])) { ?>
         <img src="img/logo.png"/>
         <a class="navtext" href="index.php">ROC Ter AA - Projectforum</a>
         <span class="right">
-        <a class="logintext"><?php echo 'Ingelogd als ' . $_SESSION['username'] . ' | '?></a>
+        <a class="logintext"><?php echo 'Ingelogd als ' . $_SESSION['user']['username'] . ' | '?></a>
         <a class="logintext" href="logout.php">Log uit</a>
     </span>
     </div>
@@ -48,7 +139,7 @@ if(isset($_SESSION["username"])) { ?>
                             <h3>Colleges</h3>
                         </th>
                         <th class="cell-stat text-center hidden-xs hidden-sm">Opdrachten</th>
-                        <th class="cell-stat-2x hidden-xs hidden-sm">Laatste reactie</th>
+                        <th class="cell-stat-2x hidden-xs hidden-sm">Laatste opdracht</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,57 +148,51 @@ if(isset($_SESSION["username"])) { ?>
                         <td>
                             <h4><a href="pages/ict.php">ICT College</a><br><small>Opdrachten voor de studenten van het ICT College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount; ?></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount1; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result1["userid"] . '<br/>' . $result1["datum"] ?><small><?php $result1["datum"]?></small></td>
                     </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/business.php">Business College</a><br><small>Opdrachten voor de studenten van het Business College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount2; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result2["userid"] . '<br/>' . $result2["datum"] ?><small><?php $result2["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/techniektechnologie.php">Techniek & Technologie College</a><br><small>Opdrachten voor de studenten van het Techniek en Technologie College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount3; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result3["userid"] . '<br/>' . $result3["datum"] ?><small><?php $result3["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/bouwdesign.php">Bouw & Design College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount4; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result4["userid"] . '<br/>' . $result4["datum"] ?><small><?php $result4["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/dienstverlening.php">Dienstverlening College</a><br><small>Opdrachten voor de studenten van het Dienstverlening College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount5; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result5["userid"] . '<br/>' . $result5["datum"] ?><small><?php $result5["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/onderwijskinderopvang.php">Onderwijs & Kinderopvang College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount6; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result6["userid"] . '<br/>' . $result6["datum"] ?><small><?php $result6["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/zorgwelzijn.php">Zorg & Welzijn College</a><br><small>Opdrachten voor de studenten van het Zorg & Welzijn College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount7; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result7["userid"] . '<br/>' . $result7["datum"] ?><small><?php $result7["datum"]?></small></td>                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -155,9 +240,8 @@ else { ?>
                         <th>
                             <h3>Colleges</h3>
                         </th>
-                        <th class="cell-stat text-center hidden-xs hidden-sm">Topics</th>
-                        <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
-                        <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+                        <th class="cell-stat text-center hidden-xs hidden-sm">Opdrachten</th>
+                        <th class="cell-stat-2x hidden-xs hidden-sm">Laatste opdracht</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -166,64 +250,51 @@ else { ?>
                         <td>
                             <h4><a href="pages/ict.php">ICT College</a><br><small>Opdrachten voor de studenten van het ICT College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">9 542</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">89 897</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount1; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result1["userid"] . '<br/>' . $result1["datum"] ?><small><?php $result1["datum"]?></small></td>
                     </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/business.php">Business College</a><br><small>Opdrachten voor de studenten van het Business College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount2; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result2["userid"] . '<br/>' . $result2["datum"] ?><small><?php $result2["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/techniektechnologie.php">Techniek & Technologie College</a><br><small>Opdrachten voor de studenten van het Techniek en Technologie College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount3; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result3["userid"] . '<br/>' . $result3["datum"] ?><small><?php $result3["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/bouwdesign.php">Bouw & Design College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount4; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result4["userid"] . '<br/>' . $result4["datum"] ?><small><?php $result4["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/dienstverlening.php">Dienstverlening College</a><br><small>Opdrachten voor de studenten van het Dienstverlening College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount5; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result5["userid"] . '<br/>' . $result5["datum"] ?><small><?php $result5["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/onderwijskinderopvang.php">Onderwijs & Kinderopvang College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount6; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result6["userid"] . '<br/>' . $result6["datum"] ?><small><?php $result6["datum"]?></small></td>                    </tr>
                     <tr>
                         <td class="text-center"><i class="fa fa-exclamation fa-2x text-danger"></i></td>
                         <td>
                             <h4><a href="pages/zorgwelzijn.php">Zorg & Welzijn College</a><br><small>Opdrachten voor de studenten van het Zorg & Welzijn College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
-                        <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
-                    </tr>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount7; ?></td>
+                        <td class="hidden-xs hidden-sm"><?php echo 'door ' . $result7["userid"] . '<br/>' . $result7["datum"] ?><small><?php $result7["datum"]?></small></td>                    </tr>
                     </tbody>
                 </table>
             </div>

@@ -19,6 +19,7 @@ if(isset($_POST["username"])) {
         session_start();
         $_SESSION["username"] = $username;
         $_SESSION["user"] = $result;
+
         header('Location: index.php');
     } else {
         header('Location: login.html');
