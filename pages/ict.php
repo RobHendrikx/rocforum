@@ -5,7 +5,7 @@ require ('../mydatabase.php');
 if(isset($_SESSION["username"])) {
 try{
 
-  $sql = "SELECT * FROM rocforum.post WHERE catid = 1 ORDER BY post.datum DESC";
+  $sql = "SELECT * FROM projectforum.post WHERE catid = 1 ORDER BY post.datum DESC";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   $result = $stmt->fetchAll();
@@ -46,8 +46,8 @@ try{
                     <h3>Opdrachten</h3>
                 </th>
                 <th class="cell-stat text-center hidden-xs hidden-sm">Geplaatst</th>
-                <th class="cell-stat text-center hidden-xs hidden-sm">Categorie</th>
                 <th class="cell-stat-2x hidden-xs hidden-sm">Laatste reactie</th>
+                <th class="cell-stat text-center hidden-xs hidden-sm">Afgerond</th>
             </tr>
             </thead>
             <tbody>
@@ -55,11 +55,17 @@ try{
                 <tr>
                   <td class="text-center"><i class="fa fa-question fa-2x text-primary"></i></td>
                   <td>
-                      <h4><a href="post.php?id=<?php echo $value['idpost']?>"><?php echo $value["projectnaam"] ?></a><br><small>..</small></h4>
+                      <h4><a href="post.php?id=<?php echo $value['idpost']?>"><?php echo $value["projectnaam"] ?></a><br><small><?php echo substr($value["omschrijving"], 0, 50) ?></small></h4>
                   </td>
                   <td class="text-center hidden-xs hidden-sm"><a href="#"><?php echo $value["datum"] ?></a></td>
-                  <td class="text-center hidden-xs hidden-sm"><a href="#">89 897</a></td>
-                  <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                  <td class="hidden-xs hidden-sm">door <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
+                  <td class="text-center hidden-xs hidden-sm">
+                      <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
+                          <input type="checkbox" value="">
+                      <?php } else { ?>
+                          <input type="checkbox" onclick="return false;" readonly="readonly">
+                      <?php }?>
+                  </td>
                 </tr>
               <?php endforeach; ?>
 

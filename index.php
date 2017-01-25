@@ -1,6 +1,11 @@
 <?php
 session_start();
 require 'mydatabase.php';
+
+$pdoQuery = "SELECT * FROM post";
+$pdoResult = $conn->query($pdoQuery);
+$pdoRowCount = $pdoResult->rowCount();
+
 if(isset($_SESSION["username"])) { ?>
     <html>
     <head>
@@ -27,6 +32,9 @@ if(isset($_SESSION["username"])) { ?>
                     <h1 class="pull-left">Colleges</h1>
                     <div class="pull-right post">
                         <a href="post.php" type="button" class="btn btn-primary btn-sm">Voeg een project toe</a>
+                        <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
+                            <a href="registration.php" type="button" class="btn btn-primary btn-sm">Voeg een gebruiker toe</a>
+                        <?php } ?>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -39,9 +47,8 @@ if(isset($_SESSION["username"])) { ?>
                         <th>
                             <h3>Colleges</h3>
                         </th>
-                        <th class="cell-stat text-center hidden-xs hidden-sm">Topics</th>
-                        <th class="cell-stat text-center hidden-xs hidden-sm">Posts</th>
-                        <th class="cell-stat-2x hidden-xs hidden-sm">Last Post</th>
+                        <th class="cell-stat text-center hidden-xs hidden-sm">Opdrachten</th>
+                        <th class="cell-stat-2x hidden-xs hidden-sm">Laatste reactie</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,8 +57,7 @@ if(isset($_SESSION["username"])) { ?>
                         <td>
                             <h4><a href="pages/ict.php">ICT College</a><br><small>Opdrachten voor de studenten van het ICT College</small></h4>
                         </td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">9 542</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">89 897</a></td>
+                        <td class="text-center hidden-xs hidden-sm"><?php echo $pdoRowCount; ?></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">John Doe</a><br><small><i class="fa fa-clock-o"></i> 3 months ago</small></td>
                     </tr>
                     <tr>
@@ -60,7 +66,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/business.php">Business College</a><br><small>Opdrachten voor de studenten van het Business College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     <tr>
@@ -69,7 +74,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/techniektechnologie.php">Techniek & Technologie College</a><br><small>Opdrachten voor de studenten van het Techniek en Technologie College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     <tr>
@@ -78,7 +82,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/bouwdesign.php">Bouw & Design College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     <tr>
@@ -87,7 +90,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/dienstverlening.php">Dienstverlening College</a><br><small>Opdrachten voor de studenten van het Dienstverlening College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     <tr>
@@ -96,7 +98,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/onderwijskinderopvang.php">Onderwijs & Kinderopvang College</a><br><small>Opdrachten voor de studenten van het Bouw & Design College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     <tr>
@@ -105,7 +106,6 @@ if(isset($_SESSION["username"])) { ?>
                             <h4><a href="pages/zorgwelzijn.php">Zorg & Welzijn College</a><br><small>Opdrachten voor de studenten van het Zorg & Welzijn College</small></h4>
                         </td>
                         <td class="text-center hidden-xs hidden-sm"><a href="#">6532</a></td>
-                        <td class="text-center hidden-xs hidden-sm"><a href="#">152123</a></td>
                         <td class="hidden-xs hidden-sm">by <a href="#">Jane Doe</a><br><small><i class="fa fa-clock-o"></i> 1 years ago</small></td>
                     </tr>
                     </tbody>
@@ -133,7 +133,7 @@ else { ?>
         <a class="logintext" href="login.html">Log in</a>
         </span>
         <span class="right">
-        <a class="logintext" href="register.php" style="padding: 15px">Vraag inloggegevens aan</a>
+        <a class="logintext" href="registration.php" style="padding: 15px">Registreer</a>
         </span>
     </span>
     </div>

@@ -2,34 +2,72 @@
 session_start();
 
 if(!isset($_SESSION["username"])){
-header("Location: login.html");
+    header("Location: login.html");
 }
 
-
+$projectErr = "";
+$emailErr = "";
+$omschrErr = "";
 $projectnaam = $omschrijving = $aantal_leden = $opleverdatum = $email_opdrachtgever = $telefoon_opdrachtgever = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("mydatabase.php");
-    $projectnaam = test_input($_POST["projectnaam"]);
-    $omschrijving = test_input($_POST["omschrijving"]);
+    if (!empty($_POST["projectnaam"] && !empty($_POST["omschrijving"]) && !empty($_POST["email_opdrachtgever"]))){
+        $projectnaam = test_input($_POST["projectnaam"]);
+        $omschrijving = test_input($_POST["omschrijving"]);
+        $aantal_leden = test_input($_POST["aantal_leden"]);
+        $opleverdatum = test_input($_POST["opleverdatum"]);
+        $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
+        $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
+        $catid = test_input($_POST["cat_id"]);
+        $categorie = test_input($_POST["categorie"]);
+
+
+        try {
+
+            $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
+                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':pnaam', $projectnaam);
+            $stmt->bindParam(':omschrijving', $omschrijving);
+            $stmt->bindParam(':aantal_leden', $aantal_leden);
+            $stmt->bindParam(':opleverdatum', $opleverdatum);
+            $stmt->bindParam(':email_opdrachtgever', $email_opdrachtgever);
+            $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
+            $stmt->bindParam(':categorie', $categorie);
+            $stmt->bindParam(':catid', $catid);
+
+            // insert one row
+            if ($stmt->execute()) {
+                header('Location: index.php');
+            }else{
+                echo "Er ging iets mis bij het posten van het project";
+            }
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    } else{
+        if(empty($_POST['projectnaam'])){
+            $projectErr = true;
+        }
+        if(empty($_POST['omschrijving'])){
+            $omschrErr = true;
+        }
+        if(empty($_POST['email_opdrachtgever'])){
+            $emailErr = true;
+        }
+    }
+    /*$omschrijving = test_input($_POST["omschrijving"]);
     $aantal_leden = test_input($_POST["aantal_leden"]);
     $opleverdatum = test_input($_POST["opleverdatum"]);
     $email_opdrachtgever = test_input($_POST["email_opdrachtgever"]);
     $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
     $catid = test_input($_POST["cat_id"]);
-    $categorie = test_input($_POST["categorie"]);
+    $categorie = test_input($_POST["categorie"]);*/
 
-    echo '<pre>';
-    // print_r($projectnaam);
-    // print_r($omschrijving);
-    // print_r($aantal_leden);
-    // print_r($opleverdatum);
-    // print_r($email_opdrachtgever);
-    // print_r($telefoon_opdrachtgever);
-    var_dump($_POST);
-    echo '<pre>';
-
-try {
+    /*try {
 
       $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
                         VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
@@ -45,19 +83,16 @@ try {
 
       // insert one row
       if ($stmt->execute()) {
-        # code...
-
-        echo "worked";
+          header('Location: index.php');
       }else{
-        echo "false";
+        echo "Er ging iets mis bij het posten van het project";
       }
 
-} catch (PDOException $e) {
-  echo $e->getMessage();
-}
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 
-
-    die();
+    die();*/
 }
 
 function test_input($data) {
@@ -93,7 +128,7 @@ function test_input($data) {
         <a class="logintext" href="logout.php">Log uit</a>
     </span>
 </div>
-<form class="container" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<form class="container" method="post" action="">
         <div class="container" style="margin-top: 35px; padding-left: 0px; padding-right: 30px">
             <div class="page-header page-heading">
                 <h1 class="pull-left">Voeg een project toe</h1>
@@ -111,34 +146,33 @@ function test_input($data) {
                   <option value="7">Zorg & Welzijn College</option>
                 </select>
             </div>
-            <div class="form-group">
-              <label for="categorie">Categorie</label>
-              <input type="text" name="categorie" class="form-control" placeholder="Web Developing/Verkoop etc.">
-            </div>
             <hr>
             <div class="form-group">
-                <label for="projectnaam">Projectnaam</label>
-                <input type="text" class="form-control" id="projectnaam" name="projectnaam">
+                <label for="projectnaam">Projectnaam *</label>
+                <input type="text" class="form-control <?php if($projectErr == true){ echo 'error';} ?>" id="projectnaam" value="<?php echo isset($_POST["projectnaam"]) ? $_POST["projectnaam"] : ''; ?>" name="projectnaam" <?php if($projectErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
             </div>
             <div class="form-group">
-                <label for="omschrijving">Projectomschrijving</label>
-                <textarea class="form-control" rows="5" id="omschrijving" name="omschrijving"></textarea>
+                <label for="omschrijving">Projectomschrijving *</label>
+                <textarea class="form-control <?php if($omschrErr == true){ echo 'error';} ?>" rows="5" id="omschrijving" name="omschrijving" <?php if($omschrErr == true){ echo 'placeholder="Verplicht veld"';} ?>><?php echo isset($_POST["omschrijving"]) ? $_POST["omschrijving"] : ''; ?></textarea>
             </div>
             <div class="form-group">
-                <label for="aantal-leden">Aantal projectleden</label>
-                <input type="number" class="form-control" id="aantal-leden" name="aantal_leden">
+                <label for="email-opdrachtgever">E-mail opdrachtgever *</label>
+                <input type="email" class="form-control <?php if($emailErr == true){ echo 'error';} ?>" id="email-opdrachtgever" value="<?php echo isset($_POST["email_opdrachtgever"]) ? $_POST["email_opdrachtgever"] : ''; ?>" name="email_opdrachtgever" <?php if($emailErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
             </div>
             <div class="form-group">
                 <label for="opleverdatum">Opleverdatum</label>
                 <input class="form-control" type="date" id="opleverdatum" name="opleverdatum">
             </div>
             <div class="form-group">
-                <label for="email-opdrachtgever">E-mail opdrachtgever</label>
-                <input type="email" class="form-control" id="email-opdrachtgever" name="email_opdrachtgever">
+                <label for="aantal-leden">Aantal projectleden</label>
+                <input type="number" class="form-control" id="aantal-leden" name="aantal_leden">
             </div>
             <div class="form-group">
-                <label for="telefoon-opdrachtgever">Telefoonnummer opdrachtgever (niet verplicht)</label>
-                <input type="number" class="form-control" id="telefoon-opdrachtgever" name="telefoon_opdrachtgever">
+                <label for="telefoon-opdrachtgever">Telefoonnummer opdrachtgever</label>
+                <input type="number" class="form-control " id="telefoon-opdrachtgever" name="telefoon_opdrachtgever">
+            </div>
+            <div class="form-group">
+                <label for="telefoon-opdrachtgever">* Verplicht in te vullen velden</label>
             </div>
             <div class="clearfix"></div>
         </div>
