@@ -6,7 +6,7 @@ header("Location: login.html");
 }
 
 
-$projectnaam = $omschrijving = $aantal_leden = $opleverdatum = $email_opdrachtgever = $telefoon_opdrachtgever = "";
+$projectnaam = $omschrijving = $aantal_leden = $opleverdatum = $email_opdrachtgever = $telefoon_opdrachtgever = $fileToUpload = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("mydatabase.php");
@@ -18,6 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefoon_opdrachtgever = test_input($_POST["telefoon_opdrachtgever"]);
     $catid = test_input($_POST["cat_id"]);
     $categorie = test_input($_POST["categorie"]);
+    $fileToUpload = test_input ($_POST["fileToUpload"]);
+
+
+
+
+
+
 
     echo '<pre>';
     // print_r($projectnaam);
@@ -26,13 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // print_r($opleverdatum);
     // print_r($email_opdrachtgever);
     // print_r($telefoon_opdrachtgever);
+    // print_r($fileToUpload);
     var_dump($_POST);
     echo '<pre>';
 
 try {
 
-      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie)
-                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie)";
+      $sql = "INSERT INTO post (projectnaam, omschrijving, aantal_leden, opleverdatum, email_opdrachtgever, telefoon_opdrachtgever, catid, categorie , fileToUpload)
+                        VALUES (:pnaam, :omschrijving, :aantal_leden, :opleverdatum, :email_opdrachtgever, :telefoon_opdrachtgever, :catid, :categorie, :fileToUpload)";
       $stmt = $conn->prepare($sql);
       $stmt->bindParam(':pnaam', $projectnaam);
       $stmt->bindParam(':omschrijving', $omschrijving);
@@ -42,6 +50,8 @@ try {
       $stmt->bindParam(':telefoon_opdrachtgever', $telefoon_opdrachtgever);
       $stmt->bindParam(':categorie', $categorie);
       $stmt->bindParam(':catid', $catid);
+      $stmt->bindParam(':fileToUpload', $fileToUpload);
+
 
       // insert one row
       if ($stmt->execute()) {
@@ -145,9 +155,14 @@ function test_input($data) {
         <div class="container" style="padding-left: 0px !important">
             <div class="col-md-6" style="padding-left: 0px !important">
                 <div class="post">
-                    <a href="#" type="button" class="btn btn-primary btn-lg btn-block">Upload afbeelding</a>
+                    <label href="" type="button" class="btn btn-primary btn-lg btn-block">Upload afbeelding</label>
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+
+
+
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="post">
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Voeg het project toe</button>
