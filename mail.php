@@ -2,6 +2,13 @@
 require 'PHPMailer-master/PHPMailerAutoload.php';
 
 $mail = new PHPMailer;
+$ict = "";
+$business = "";
+$dienst = "";
+$onderwijs = "";
+$techniek = "";
+$zorg = "";
+$bouw = "";
 
 //$mail->SMTPDebug = 3;                               // Enable verbose debug output
 

@@ -7,7 +7,6 @@ if(!isset($_SESSION["username"])){
 require 'mydatabase.php';
 
 $username = @$_POST['username'];
-$email = @$_POST['email'];
 $pw = @$_POST['password'];
 $confirm = @$_POST['confirm'];
 
@@ -25,11 +24,11 @@ if(isset($_POST['submit'])) {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':user', $username);
             $stmt->bindParam(':pass', $password);
-            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':email', $password);
 
             // insert one row
             if ($stmt->execute()) {
-                echo "Gebruiker aangemaakt";
+                echo "Aangemaakt";
             }else{
                 echo "Er ging iets mis bij het aanmaken van de gebruiker";
             }
