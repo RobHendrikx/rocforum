@@ -7,34 +7,49 @@ if(!isset($_SESSION["username"])){
 require 'mydatabase.php';
 
 $username = @$_POST['username'];
+$email = @$_POST['email'];
 $pw = @$_POST['password'];
 $confirm = @$_POST['confirm'];
 
 $password = password_hash($pw, PASSWORD_BCRYPT, array('cost' => 10));
 
-
+$userErr = "";
+$passErr = "";
+$confirmErr = "";
+$emailErr = "";
 if(isset($_POST['submit'])) {
-    if ($_POST["password"] == $_POST["confirm"]) {
+    if (!empty($_POST["password"]) && !empty($_POST["confirm"]) && !empty($_POST["username"]) && $_POST["password"] == $_POST["confirm"]) {
         try {
-            $sql = "INSERT INTO users (username, password)
-                        VALUES (:user, :pass)";
+            $sql = "INSERT INTO users (username, password, email)
+                        VALUES (:user, :pass, :email)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':user', $username);
             $stmt->bindParam(':pass', $password);
+            $stmt->bindParam(':email', $email);
 
             // insert one row
             if ($stmt->execute()) {
-                echo "Aangemaakt";
+                echo "Gebruiker aangemaakt";
             }else{
-                echo "Er ging iets mis bij het posten van het project";
+                echo "Er ging iets mis bij het aanmaken van de gebruiker";
             }
 
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
-    else {
-        echo 'Wachtwoorden komen niet overeen';
+    elseif($_POST["password"] != $_POST["confirm"]) {
+        $noMatchErr = true;
+    }else{
+        if(empty($_POST['username'])){
+            $userErr = true;
+        }
+        if(empty($_POST['password'])){
+            $passErr = true;
+        }
+        if(empty($_POST['confirm'])){
+            $confirmErr = true;
+        }
     }
 }
 
@@ -66,15 +81,18 @@ if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
         </div>
         <div class="form-group">
             <label for="username">Gebruikersnaam</label>
-            <input type="text" class="form-control" id="username" name="username">
+            <input type="text" class="form-control <?php if($userErr == true){ echo 'error';} ?>" value="<?php echo isset($_POST["username"]) ? $_POST["username"] : ''; ?>" id="username" name="username" <?php if($userErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
+        </div><div class="form-group">
+            <label for="username">E-mail</label>
+            <input type="email" class="form-control <?php if($emailErr == true){ echo 'error';} ?>" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" id="email" name="email" <?php if($emailErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
         </div>
         <div class="form-group">
             <label for="password">Wachtwoord</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control <?php if($passErr == true){ echo 'error';} ?>" value="<?php echo isset($_POST["password"]) ? $_POST["password"] : ''; ?>" id="password" name="password" <?php if($passErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
         </div>
         <div class="form-group">
-            <label for="confirm">confirm</label>
-            <input type="password" class="form-control" id="confirm" name="confirm">
+            <label for="confirm">Bevestig wachtwoord</label>
+            <input type="password" class="form-control <?php if($confirmErr == true){ echo 'error';} ?>" value="<?php echo isset($_POST["confirm"]) ? $_POST["confirm"] : ''; ?>" id="confirm" name="confirm" <?php if($confirmErr == true){ echo 'placeholder="Verplicht veld"';} ?>>
         </div>
         <div class="clearfix"></div>
     </div>

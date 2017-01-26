@@ -33,7 +33,7 @@ try{
   $stmt->execute();
   $post = $stmt->fetch();
 
-  $sql = "SELECT * FROM projectforum.reacties, projectforum.users, projectforum.post WHERE reacties.userid = users.idusers AND reacties.postid = post.idpost AND post.idpost = :post_id ORDER BY reacties.idreacties DESC"; #
+  $sql = "SELECT * FROM projectforum.reacties, projectforum.users, projectforum.post WHERE reacties.userid = users.idusers AND reacties.postid = post.idpost AND post.idpost = :post_id"; #
   $stmt = $conn->prepare($sql);
     $stmt->bindParam(':post_id', $postid);
   # :post_id
@@ -78,13 +78,24 @@ try{
         </div>
         <div class="row margin-top-20">
           <div class="col-md-12">
-            <div class="well reldate" style='padding: 40px;'>
-              <?php echo $post["omschrijving"]; ?>
-              <p class="lowerdate"><?php echo "Geplaatst door " . $post["userid"] . '<br/>' . 'op ' . $post["datum"]?></p>
-            </div>
+              <div class="col-md-12" style="margin-bottom: 30px"><?php echo $post["omschrijving"]; ?></div>
+              <div class="col-md-12 well reldate"><?php echo "Geplaatst door " . $post["userid"] . '<br/>' . 'op ' . $post["datum"] . '<br/><br/>' . "Emailadres: " . $post["email_opdrachtgever"] . '<br/>' . "Uiterlijke opleverdatum: " . isset($post["opleverdatum"]) . '<br/>' . "Geschat aantal projectleden: " . isset($post["aantal_projectleden"]) . '<br/>' . isset($post["telefoon_opdrachtgever"])?></div>
           </div>
         </div>
-
+          <div class="row">
+              <div class="col-md-12">
+                  <?php
+                  foreach ($reacties as $key => $reactie) {
+                      echo "<div class='well'>
+                        <p>{$reactie["username"]}:</p>
+                        <lead>
+                          {$reactie["reactie"]}
+                        </lead>
+                      </div>";
+                  }
+                  ?>
+              </div>
+          </div>
         <div class="row margin-top-20">
           <div class="col-md-12">
             <form class="form-group" action="post.php?id=<?php echo $postid;  ?>" method="post">
@@ -94,20 +105,7 @@ try{
             </form>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <?php
-              foreach ($reacties as $key => $reactie) {
-                echo "<div class='well'>
-                        <p>{$reactie["username"]}:</p>
-                        <lead>
-                          {$reactie["reactie"]}
-                        </lead>
-                      </div>";
-              }
-            ?>
-          </div>
-        </div>
+
       </div>
   </body>
 </html>

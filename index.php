@@ -124,7 +124,7 @@ if(isset($_SESSION["username"])) { ?>
                     <div class="pull-right post">
                         <a href="post.php" type="button" class="btn btn-primary btn-sm">Voeg een project toe</a>
                         <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["isadmin"] == 1) { ?>
-                            <a href="registration.php" type="button" class="btn btn-primary btn-sm">Voeg een gebruiker toe</a>
+                            <a href="admin.php" type="button" class="btn btn-primary btn-sm">Admin pagina</a>
                         <?php } ?>
                     </div>
                     <div class="clearfix"></div>
