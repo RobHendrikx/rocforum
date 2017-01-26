@@ -12,7 +12,7 @@ $pdf->SetAutoPageBreak(false);
 $pdf->AddPage();
 
 //beginhoogte van de rijkoppen
-$y_axis_initial = 50;
+$y_axis_initial = 20;
 
 //beginhoogte van de data uit database
 $y_axis = 55;
@@ -25,9 +25,9 @@ $pdf->SetFont('Arial','B',15);
 // we gaan de resultaten ophalen uit database
 // Page header
 
+$id = $_GET["id"];
 
-
-$sth = $conn->prepare("SELECT * FROM post WHERE idpost = '54' ");
+$sth = $conn->prepare("SELECT * FROM post WHERE idpost = '$id' ");
 $sth->execute();
 
 /* Fetch all of the values of the first column */
@@ -41,11 +41,16 @@ foreach($result as $sss => $row) {
     //positie waar het feest van de Y-as moet beginnen
       $pdf->SetY($y_axis_initial);
     //posistie waar de X-as begind
-    $pdf->SetX(80);
+    $pdf->SetX(65);
 
     //Lettertype + letter grote
     $pdf->SetFont('Arial','',30);    //Titel
-    $pdf->Cell(24,6, ' '.$row['projectnaam'],0 ,0);
+
+    $pdf->Cell(24,1, ' '.$row['projectnaam'],0 ,0);
+    $pdf->Image('img/ICT-college.png', 150, 10, 50, 0);
+
+    // $pdf->SetY(40);
+    $pdf->Image("../".$row["afbeeldingen"], 70, 150, 50);
 
 
 
@@ -59,11 +64,52 @@ foreach($result as $sss => $row) {
 
     //Naam 1 wordt uit de database gehaald
     //$pdf->Cell(1,25,$row['projectnaam'],0,0,'L',2);
-    $pdf->SetX(25);
+    $pdf->SetX(10);
 
     //Fax nummer
-    $pdf->Cell(4,60, 'Aantal verwachte SBU  voor dit project: xx uur :',0 ,0);
+    $pdf->SetFont('Arial','', 10);
+    $pdf->Cell(4,60, 'opleverdatum :',0 ,0);
+    $pdf->SetFont('Arial','B',12);
+    $pdf->SetX(35);
+    $pdf->Cell(4,60, $row["opleverdatum"],0,0);
+    $pdf->SetY(62);
+    $pdf->SetFont('Arial','', 10);
+    $pdf->Cell(4,60, 'Aantal Projectleden :',0 ,0);
+    $pdf->SetFont('Arial','B',12);
+    $pdf->SetX(44);
+    $pdf->Cell(4,60, $row["aantal_leden"],0,0);
+    $pdf->SetY(82);
+    $pdf->SetFont('Arial','B', 10);
+    $pdf->Cell(4,60, 'omschrijving :',0 ,0);
+    $pdf->SetFont('Arial','B',12);
+    $pdf->SetY(95);
+    $pdf->SetX(20);
+    $pdf->Cell(140,60, $row["omschrijving"],40,40);
+    $pdf->SetY(222);
+    $pdf->SetX(148);
+    $pdf->Cell(4,60, 'contact',0,0);
+    $pdf->SetY(232);
+    $pdf->SetX(148);
+    $pdf->SetFont('Arial','',10);
+    $pdf->Cell(4,60, 'Email: ',0,0);
+    $pdf->SetY(232);
+    $pdf->SetX(160);
+    $pdf->Cell(4,60, $row["email_opdrachtgever"],0,0);
+    $pdf->SetY(240);
+    $pdf->SetX(148);
+    $pdf->SetFont('Arial','',10);
+    $pdf->Cell(4,60, 'Telefoon: ',0,0);
+    $pdf->SetX(164);
+    $pdf->Cell(4,60, $row["telefoon_opdrachtgever"],0,0);
+
+
+
+
+
+
+
     $pdf->SetX(140);
+    $pdf->SetY($y_axis+500);
 
     //Faxnummer wordt uit de database gehaald
     $pdf->Cell(1,40,$row['email_opdrachtgever'],0,0,'L',2); // kolomnaam

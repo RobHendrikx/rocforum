@@ -49,6 +49,7 @@ try{
 
 }
 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,6 +75,9 @@ try{
             <h1 class="center"><?php echo $post["projectnaam"] ?></h1>
             <h3 class="center"><?php echo $post["categorie"] ?></h3>
             <p class="center"><a href="ict.php">Ga terug</a></p>
+            <div class="">
+              <a target="_blank" href="../pdf/test.php?id=<?php echo $postid ?>" class="btn btn-info" style="margin: 0px auto; display: block;">Bekijk pdf</a>
+            </div>
           </div>
         </div>
         <div class="row margin-top-20">
